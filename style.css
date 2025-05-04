@@ -458,10 +458,16 @@ th:last-child{
 
 
         /*------------------------------ account-page ------------------------------*/
-.account-page{
-    padding: 50px 0;
-    background: radial-gradient(#fff, #ffd6d6);
-}
+        .account-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: radial-gradient(#fff, #ffd6d6);
+        }
+
+        
+        
 .form-container{
     background: #fff;
     width:300px;
