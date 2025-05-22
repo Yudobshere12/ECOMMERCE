@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +22,18 @@
     }
     h1 {
       text-align: center;
+      margin-bottom: 10px;
+    }
+    .logout-container {
+      text-align: right;
       margin-bottom: 20px;
+    }
+    .logout-container button {
+      padding: 10px 15px;
+      background: #dc3545;
+      color: white;
+      border: none;
+      cursor: pointer;
     }
     table {
       width: 100%;
@@ -78,6 +97,13 @@
 </head>
 <body>
 
+  <!-- Logout Button -->
+  <div class="logout-container">
+    <form action="logout.php" method="post">
+      <button type="submit">Logout</button>
+    </form>
+  </div>
+
   <h1>Your Cart</h1>
 
   <table id="cart-table">
@@ -88,7 +114,7 @@
       <th>Remove</th>
     </tr>
 
-    <!-- Product 1 -->
+    <!-- Product Rows (static demo) -->
     <tr>
       <td class="cart-info">
         <img src="image/NIKE+DUNK+LOW.avif" alt="DUNK LOW " />
@@ -101,8 +127,6 @@
       <td>$25.00</td>
       <td><a href="#" class="remove">Remove</a></td>
     </tr>
-
-    <!-- Product 2 -->
     <tr>
       <td class="cart-info">
         <img src="image/product-2.jpg" alt="HRX Black Shoes" />
@@ -115,8 +139,6 @@
       <td>$60.00</td>
       <td><a href="#" class="remove">Remove</a></td>
     </tr>
-
-    <!-- Product 3 -->
     <tr>
       <td class="cart-info">
         <img src="image/shoes.avif" alt="NIKE DUNK LOW WOMENS" />
@@ -129,8 +151,6 @@
       <td>$40.00</td>
       <td><a href="#" class="remove">Remove</a></td>
     </tr>
-
-    <!-- Product 4 -->
     <tr>
       <td class="cart-info">
         <img src="image/product-8.jpg" alt="BLACK FOSSIL RUNNING WATCH" />
@@ -143,8 +163,6 @@
       <td>$35.00</td>
       <td><a href="#" class="remove">Remove</a></td>
     </tr>
-
-    <!-- Product 5 -->
     <tr>
       <td class="cart-info">
         <img src="image/exclusive.png" alt="Sport Watch" />
@@ -165,7 +183,7 @@
 
   <p id="order-summary"></p>
   <button id="place-order">Place Order</button>
-
+  
   <div id="receipt">
     <h2>Thank You for Your Order!</h2>
     <p id="receipt-details"></p>
