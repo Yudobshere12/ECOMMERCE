@@ -1,10 +1,24 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
+// Example: Fetching cart items for a specific user
+$user_id = $_SESSION['user_id'];
+
+$sql = "SELECT cart.id, products.name, products.price, cart.quantity
+        FROM cart
+        JOIN products ON cart.product_id = products.id
+        WHERE cart.user_id = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+while($row = $result->fetch_assoc()) {
+    echo "Product: " . $row['name'] . "<br>";
+    echo "Price: ₱" . $row['price'] . "<br>";
+    echo "Quantity: " . $row['quantity'] . "<br><hr>";
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -98,11 +112,12 @@ if (!isset($_SESSION['user_id'])) {
 <body>
 
   <!-- Logout Button -->
-  <div class="logout-container">
-    <form action="logout.php" method="post">
-      <button type="submit">Logout</button>
-    </form>
-  </div>
+ <div class="logout-container">
+  <form action="logout.php" method="post">
+    <button type="submit">Logout</button>
+  </form>
+</div>
+
 
   <h1>Your Cart</h1>
 
